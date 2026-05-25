@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>SINPE Bridge Kiosk</title>
+    <meta
+      name="description"
+      content="Kiosk premium para generar codigos SINPE temporales en comercios fisicos."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="ambient ambient-a" aria-hidden="true"></div>
+      <div class="ambient ambient-b" aria-hidden="true"></div>
+      <div class="grid-overlay" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <div class="brand">
+          <img src="/assets/logo.svg" alt="SINPE Bridge" class="brand-mark" />
+          <div>
+            <p class="eyebrow">sinpe bridge</p>
+            <h1>kiosk</h1>
+          </div>
+        </div>
+        <div class="meta">
+          <div class="meta-chip">
+            <span class="chip-label">hora</span>
+            <strong id="clock">--:--</strong>
+          </div>
+          <div class="meta-chip">
+            <span class="chip-label">estado</span>
+            <strong id="connection-badge">listo</strong>
+          </div>
+        </div>
+      </header>
+
+      <main class="viewport">
+        <section class="panel panel-home is-active" data-screen="home">
+          <div class="hero-copy">
+            <p class="eyebrow">pago instantaneo</p>
+            <h2>Paga por SINPE facilmente</h2>
+            <p class="hero-text">
+              Genere un codigo temporal y colocalo en el comprobante desde su banca movil.
+            </p>
+          </div>
+
+          <div class="hero-action">
+            <button id="generate-button" class="cta-button" type="button">
+              <span>Generar codigo</span>
+              <small>Toque aqui para continuar</small>
+            </button>
+          </div>
+
+          <div class="home-footer">
+            <div class="info-card">
+              <span class="info-label">flujo</span>
+              <strong>1 toque · 1 codigo · 1 comprobante</strong>
+            </div>
+            <div class="info-card">
+              <span class="info-label">pantalla</span>
+              <strong>Lista para modo fullscreen y tactil</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel panel-loading" data-screen="loading" aria-hidden="true">
+          <div class="loader-orb"></div>
+          <p class="eyebrow">generando</p>
+          <h2>Preparando su codigo SINPE</h2>
+          <p class="hero-text">Estamos solicitando un token temporal seguro.</p>
+        </section>
+
+        <section class="panel panel-token" data-screen="token" aria-hidden="true">
+          <div class="token-frame">
+            <p class="eyebrow">codigo temporal</p>
+            <div id="token-value" class="token-value">-----</div>
+            <p id="token-instruction" class="token-instruction">
+              Coloque este codigo en el comprobante.
+            </p>
+
+            <div class="countdown-block">
+              <div class="countdown-track">
+                <div id="countdown-bar" class="countdown-bar"></div>
+              </div>
+              <div class="countdown-copy">
+                <span>Expira en</span>
+                <strong id="countdown-text">00s</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel panel-error" data-screen="error" aria-hidden="true">
+          <p class="eyebrow">atencion</p>
+          <h2 id="error-title">No fue posible generar el codigo</h2>
+          <p id="error-message" class="hero-text">
+            Revise la conexion con el backend y vuelva a intentar.
+          </p>
+          <button id="retry-button" class="ghost-button" type="button">Intentar de nuevo</button>
+        </section>
+      </main>
+    </div>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "sinpe-bridge-kiosk",
+  "version": "1.0.0",
+  "description": "Premium kiosk edge UI for SINPE Bridge",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "deploy:prod": "wrangler deploy --env production",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^4.93.0"
+  }
+}

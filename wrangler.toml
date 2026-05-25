@@ -1,0 +1,38 @@
+name = "sinpe-bridge-kiosk"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+workers_dev = true
+preview_urls = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+[[durable_objects.bindings]]
+name = "KIOSK_LIMITER"
+class_name = "KioskLimiterDurableObject"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["KioskLimiterDurableObject"]
+
+[observability]
+enabled = true
+
+[observability.logs]
+enabled = true
+
+[vars]
+API_BASE_URL = "http://127.0.0.1:8000"
+WORKER_PROXY_URL = "http://127.0.0.1:8787"
+TOKEN_ENDPOINT_PATH = "/api/v1/kiosk/token"
+TOKEN_STATUS_ENDPOINT_PATH = "/api/v1/kiosk/token/status"
+COOLDOWN_MS = "8000"
+TOKEN_TTL_MS = "90000"
+
+[env.production.vars]
+TOKEN_ENDPOINT_PATH = "/api/v1/kiosk/token"
+TOKEN_STATUS_ENDPOINT_PATH = "/api/v1/kiosk/token/status"
+COOLDOWN_MS = "8000"
+TOKEN_TTL_MS = "90000"
