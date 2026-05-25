@@ -24,7 +24,6 @@ enabled = true
 enabled = true
 
 [vars]
-WORKER_PROXY_URL = "http://127.0.0.1:8787"
 TOKEN_ENDPOINT_PATH = "/api/v1/kiosk/token"
 TOKEN_STATUS_ENDPOINT_PATH = "/api/v1/kiosk/token/status"
 COOLDOWN_MS = "8000"
