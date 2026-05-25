@@ -1,3 +1,2 @@
-API_BASE_URL=http://127.0.0.1:8000
 API_KEY=replace-with-real-api-key
-WORKER_PROXY_URL=http://127.0.0.1:8787
+WORKER_PROXY_URL=api.tonyml.com

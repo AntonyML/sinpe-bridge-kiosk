@@ -46,8 +46,24 @@ function log(level, event, data = {}) {
   );
 }
 
+function normalizeBaseUrl(baseUrl) {
+  if (!baseUrl) {
+    throw new Error("WORKER_PROXY_URL is required");
+  }
+
+  if (baseUrl.startsWith("http://") || baseUrl.startsWith("https://")) {
+    return baseUrl;
+  }
+
+  return `https://${baseUrl}`;
+}
+
 function normalizeProxyUrl(baseUrl, path) {
-  return new URL(path, baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`).toString();
+  const normalizedBaseUrl = normalizeBaseUrl(baseUrl);
+  return new URL(
+    path,
+    normalizedBaseUrl.endsWith("/") ? normalizedBaseUrl : `${normalizedBaseUrl}/`,
+  ).toString();
 }
 
 function normalizeTokenResponse(payload, env) {
@@ -260,26 +276,21 @@ async function ping(url, init) {
 
 async function handleHealth(env) {
   const proxyHealthUrl = normalizeProxyUrl(env.WORKER_PROXY_URL, "/health");
-  const apiHealthUrl = normalizeProxyUrl(env.API_BASE_URL, "/health");
 
-  const [proxy, api] = await Promise.all([
-    ping(proxyHealthUrl, {
-      headers: {
-        "x-api-key": env.API_KEY,
-      },
-    }),
-    ping(apiHealthUrl, {}),
-  ]);
+  const proxy = await ping(proxyHealthUrl, {
+    headers: {
+      "x-api-key": env.API_KEY,
+    },
+  });
 
   const status = proxy.ok ? 200 : 503;
-  log("info", "kiosk_connected", { proxyStatus: proxy.status, apiStatus: api.status });
+  log("info", "kiosk_connected", { proxyStatus: proxy.status });
 
   return json(
     {
       ok: proxy.ok,
       service: "sinpe-bridge-kiosk",
       proxy,
-      api,
     },
     status,
   );

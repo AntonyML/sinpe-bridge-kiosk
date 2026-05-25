@@ -123,7 +123,6 @@ Consulta el ultimo token activo almacenado por el Durable Object.
 Health check del kiosk Worker. Intenta verificar:
 
 - conectividad con `WORKER_PROXY_URL/health`
-- conectividad con `API_BASE_URL/health`
 
 ## Durable Object mini
 
@@ -202,16 +201,14 @@ Ejemplo:
 Se preparan en `.dev.vars` a partir de `.dev.vars.example`.
 
 ```env
-API_BASE_URL=http://127.0.0.1:8000
 API_KEY=replace-with-real-api-key
-WORKER_PROXY_URL=http://127.0.0.1:8787
+WORKER_PROXY_URL=api.tonyml.com
 ```
 
 Uso:
 
-- `API_BASE_URL`: usado por `/health` para verificar el backend FastAPI.
 - `API_KEY`: se reenvia al proxy con `x-api-key`.
-- `WORKER_PROXY_URL`: upstream real del kiosk Worker.
+- `WORKER_PROXY_URL`: upstream unico del kiosk Worker. Puede configurarse como `api.tonyml.com` o `https://api.tonyml.com`.
 
 Variables opcionales ya incluidas en `wrangler.toml`:
 
@@ -293,4 +290,5 @@ Eso mantiene la arquitectura simple:
 
 - El Durable Object almacena solo el minimo estado efimero por kiosk.
 - El Worker normaliza distintos formatos de respuesta para facilitar integrar la API actual.
+- El kiosk nunca llama directo a FastAPI; todo pasa por el proxy configurado en `WORKER_PROXY_URL`.
 - Si el backend aun no expone el endpoint de token temporal, el kiosk ya queda listo y solo necesita alinear ese contrato upstream.
