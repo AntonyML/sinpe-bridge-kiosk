@@ -15,7 +15,7 @@ class_name = "KioskLimiterDurableObject"
 
 [[migrations]]
 tag = "v1"
-new_classes = ["KioskLimiterDurableObject"]
+new_sqlite_classes = ["KioskLimiterDurableObject"]
 
 [observability]
 enabled = true
@@ -24,13 +24,19 @@ enabled = true
 enabled = true
 
 [vars]
+WORKER_PROXY_URL = "https://api.tonyml.com"
 TOKEN_ENDPOINT_PATH = "/api/v1/kiosk/token"
 TOKEN_STATUS_ENDPOINT_PATH = "/api/v1/kiosk/token/status"
 COOLDOWN_MS = "8000"
 TOKEN_TTL_MS = "90000"
 
 [env.production.vars]
+WORKER_PROXY_URL = "https://api.tonyml.com"
 TOKEN_ENDPOINT_PATH = "/api/v1/kiosk/token"
 TOKEN_STATUS_ENDPOINT_PATH = "/api/v1/kiosk/token/status"
 COOLDOWN_MS = "8000"
 TOKEN_TTL_MS = "90000"
+
+[[env.production.durable_objects.bindings]]
+name = "KIOSK_LIMITER"
+class_name = "KioskLimiterDurableObject"
